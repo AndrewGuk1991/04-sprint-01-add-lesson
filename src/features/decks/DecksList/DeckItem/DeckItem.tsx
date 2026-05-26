@@ -1,7 +1,7 @@
 import s from './DeckItem.module.css'
 
 type DeckProps = {
-  deck: any // todo: fix
+  deck: DeckType
 }
 
 const TEST_ACC_NAME = 'kukus'
@@ -33,4 +33,21 @@ export const DeckItem = ({ deck }: DeckProps) => {
       )}
     </li>
   )
+}
+
+
+export type DeckType = {
+  author: {
+    id: string,
+    name: string
+  }
+  cardsCount: number
+  cover: string | null
+  created: string
+  id: string
+  isFavorite: boolean
+  isPrivate: boolean
+  name: string
+  updated: string
+  userId: string
 }

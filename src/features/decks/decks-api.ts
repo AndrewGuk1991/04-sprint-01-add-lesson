@@ -6,3 +6,9 @@ export const instance = axios.create({
     'x-auth-skip': true,
   },
 })
+
+export const decksApi = {
+  fetchDecks () {
+    return instance.get('/v2/decks')
+  }
+}

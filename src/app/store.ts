@@ -1,7 +1,7 @@
 import { combineReducers, legacy_createStore, applyMiddleware, AnyAction } from 'redux'
 import thunkMiddleware, { ThunkDispatch } from 'redux-thunk'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
-import { decksReducer } from '../features/decks/decks-reducer.ts'
+import { decksReducer } from '../features/decks/decks-slice.ts'
 
 const rootReducer = combineReducers({
   decksReducer,
