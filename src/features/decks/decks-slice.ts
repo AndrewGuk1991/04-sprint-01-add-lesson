@@ -61,6 +61,23 @@ export const decksSlice = createDecksSlice({
         state.decks.unshift(action.payload)
       }
     }),
+    deleteDeckTC: create.asyncThunk(async (id: string, {dispatch, rejectWithValue}) => {
+      try {
+        dispatch(changeStatusAC({ status: 'loading' }))
+        await new Promise((resolve) => setTimeout(resolve, 2000))
+        const res = await decksApi.deleteDeck(id)
+        dispatch(changeStatusAC({ status: 'succeeded' }))
+        return res.data.id
+      } catch (e) {
+        dispatch(changeStatusAC({ status: 'failed' }))
+        return rejectWithValue(e)
+      }
+    },
+      {
+      fulfilled: (state, action) => {
+        state.decks = state.decks.filter((d) => d.id !== action.payload)
+      }
+    }),
     changeStatusAC: create.reducer<{status: RequestType}>((state, action) => {
       state.status = action.payload.status
     })
@@ -68,7 +85,7 @@ export const decksSlice = createDecksSlice({
 })
 
 export const decksReducer = decksSlice.reducer
-export const {fetchDecksTC, addDeckTC, changeStatusAC} = decksSlice.actions
+export const {fetchDecksTC, addDeckTC, changeStatusAC, deleteDeckTC} = decksSlice.actions
 export const {selectDecks, selectStatus} = decksSlice.selectors
 
 export type RequestType = 'idle' | 'loading' | 'succeeded' | 'failed'
@@ -85,4 +102,4 @@ export type RequestType = 'idle' | 'loading' | 'succeeded' | 'failed'
 // type DecksActions = any
 
 
-
+// 'cmpo2ldfh00oanu01fk8dbglz'

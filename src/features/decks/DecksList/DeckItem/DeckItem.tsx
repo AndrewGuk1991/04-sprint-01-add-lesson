@@ -1,13 +1,20 @@
 import s from './DeckItem.module.css'
+import { useAppDispatch } from '../../../../app/store.ts'
+import { deleteDeckTC } from '../../decks-slice.ts'
 
 type DeckProps = {
   deck: DeckType
 }
 
-const TEST_ACC_NAME = 'kukus'
+const TEST_ACC_NAME = 'Nik-Kik-Shpink'
 
 export const DeckItem = ({ deck }: DeckProps) => {
   const isTestingDeck = deck.author.name === TEST_ACC_NAME
+  const dispatch = useAppDispatch()
+
+  const deleteDeck = (id: string) => {
+    dispatch(deleteDeckTC(id))
+  }
 
   return (
     <li className={s.item}>
@@ -28,7 +35,9 @@ export const DeckItem = ({ deck }: DeckProps) => {
       {isTestingDeck && (
         <div className={s.buttonBox}>
           <button>update</button>
-          <button>delete</button>
+          <button
+            onClick={() => deleteDeck(deck.id)}
+          >delete</button>
         </div>
       )}
     </li>
