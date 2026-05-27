@@ -34,12 +34,25 @@ export const decksSlice = createDecksSlice({
       fulfilled: (state, action) => {
         state.decks = action.payload
       }
+    }),
+    addDeckTC: create.asyncThunk(async (title: string, {rejectWithValue}) => {
+      try {
+        const res = await decksApi.addDeck(title)
+        return res.data
+      } catch (e) {
+        return rejectWithValue(e)
+      }
+    },
+      {
+      fulfilled: (state, action) => {
+        state.decks.unshift(action.payload)
+      }
     })
   })
 })
 
 export const decksReducer = decksSlice.reducer
-export const {fetchDecksTC} = decksSlice.actions
+export const {fetchDecksTC, addDeckTC} = decksSlice.actions
 
 // type DecksState = typeof initialState
 //
